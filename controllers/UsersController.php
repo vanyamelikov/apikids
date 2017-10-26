@@ -53,6 +53,11 @@ class UsersController extends CController
         return Yii::$app->user->identity->profile;
     }
 
+    public function actionNotifications()
+    {
+        return Yii::$app->user->identity->notifications;
+    }
+
     public function actionUpdateProfile($name, $surname, $father_name, $birthday, $phone, $email, $password = false)
     {
         $user = Yii::$app->user->identity;
