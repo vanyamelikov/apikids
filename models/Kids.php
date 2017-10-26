@@ -80,7 +80,7 @@ class Kids extends \yii\db\ActiveRecord
 
     public function getParents()
     {
-        return $this->hasMany(Parents::className(), ['id' => 'id_parent'])->via('relKidsParents');
+        return $this->hasMany(Parents::className(), ['id' => 'id_parents'])->via('relKidsParents');
     }
 
     public function getSessKids()
