@@ -196,7 +196,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function getOffers()
     {
-        return $this->hasMany(Offers::className(), ['id_user' => 'id']);
+        return $this->hasMany(Offers::className(), ['id_user' => 'id_profile']);
     }
 
     public function updateProfile($name, $surname, $father_name, $birthday, $phone, $email)
