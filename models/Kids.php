@@ -106,13 +106,26 @@ class Kids extends \yii\db\ActiveRecord
 
             $action .= " \"".$kid->station->name."\"";
 
-            $result[$kid->date] = $action;
+            $result[$kid->date] = [
+                'action' => $action,
+                'date' => $kid->date,
+                'dateText' => date("d.m.Y H:i:s", $kid->date)
+            ];
         }
 
         foreach ($this->sessCity as $city)
         {
-            $result[$city->input] = "Вошел в город";
-            $result[$city->output] = "Вышел из города";
+            $result[$city->input] = [
+                'action' => "Вошел в город",
+                'date' => $city->input,
+                'dateText' => date("d.m.Y H:i:s", $city->input)
+            ];
+
+            $result[$city->output] = [
+                'action' => "Вышел из города",
+                'date' => $city->output,
+                'dateText' => date("d.m.Y H:i:s", $city->output)
+            ];
         }
 
         return $result;
