@@ -35,6 +35,11 @@ class Kids extends \yii\db\ActiveRecord
         return 'kids';
     }
 
+    public function extraFields()
+    {
+        return ['stationName', 'age'];
+    }
+
     /**
      * @inheritdoc
      */
@@ -91,6 +96,30 @@ class Kids extends \yii\db\ActiveRecord
     public function getSessCity()
     {
         return $this->hasMany(SessCity::className(), ['id_kids' => 'id']);
+    }
+
+    public function getStation()
+    {
+        return $this->hasOne(Stations::className(), ['id' => 'id_station']);
+    }
+
+    public function getStationName()
+    {
+        $station = $this->station;
+
+        if ($station)
+            return $station->name;
+
+        if ($this->id_city == 1)
+            return "В городе";
+
+        return "Не в городе";
+    }
+
+    public function getAge()
+    {
+        return floor((time()-$this->birthday)/(60*60*24*365));
+
     }
 
     public function getEvents()

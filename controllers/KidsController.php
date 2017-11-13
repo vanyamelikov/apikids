@@ -19,7 +19,7 @@ class KidsController extends CController
         if ($user->type != Users::TYPE_PARENT)
             throw new ForbiddenHttpException('Вы не родитель!');
 
-        return $user->profile->kids;
+        return new ArrayDataProvider(['models' => $user->profile->kids]);
     }
 
     public function actionEvents()
@@ -32,6 +32,8 @@ class KidsController extends CController
         $dataProvider = new ArrayDataProvider([
             'models' => $user->profile->events
         ]);
+
+        $dataProvider->pagination->pageSize = 10;
 
         return $dataProvider;
     }

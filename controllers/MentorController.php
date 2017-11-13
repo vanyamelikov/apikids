@@ -16,6 +16,8 @@ class MentorController extends CController
             'query' => ReviewMentor::find()->where(['id_mentor' => $id])
         ]);
 
+        $dataProvider->pagination->pageSize = 10;
+
         return $dataProvider;
     }
 }
