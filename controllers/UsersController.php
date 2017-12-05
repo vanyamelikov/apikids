@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Users;
 use Yii;
+use yii\data\ArrayDataProvider;
 use yii\rest\ActiveController;
 use yii\web\ForbiddenHttpException;
 
@@ -45,7 +46,10 @@ class UsersController extends CController
 
     public function actionOffers()
     {
-        return Yii::$app->user->identity->offers;
+        $dataProvider = new ArrayDataProvider([
+            'models' => Yii::$app->user->identity->offers
+        ]);
+        return $dataProvider;
     }
 
     public function actionProfile()

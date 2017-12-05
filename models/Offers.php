@@ -37,6 +37,11 @@ class Offers extends \yii\db\ActiveRecord
         return 'offers';
     }
 
+    public function extraFields()
+    {
+        return ['dateText', 'timeText', 'countParents', 'countKids'];
+    }
+
     /**
      * @inheritdoc
      */
@@ -76,5 +81,92 @@ class Offers extends \yii\db\ActiveRecord
             'sendMail' => 'Send Mail',
             'finish_status' => 'Finish Status',
         ];
+    }
+
+    public function getDateText()
+    {
+        $arr = [
+            'Января',
+            'Февраля',
+            'Марта',
+            'Апреля',
+            'Мая',
+            'Июня',
+            'Июля',
+            'Августа',
+            'Сентября',
+            'Октября',
+            'Ноября',
+            'Декабря'
+        ];
+
+        $month = $arr[date("m", $this->date) - 1];
+
+        return date("d $month Y", $this->date);
+    }
+
+    public function getTimeText()
+    {
+        $arr = [
+            'Января',
+            'Февраля',
+            'Марта',
+            'Апреля',
+            'Мая',
+            'Июня',
+            'Июля',
+            'Августа',
+            'Сентября',
+            'Октября',
+            'Ноября',
+            'Декабря'
+        ];
+
+        $month = $arr[date("m", $this->time) - 1];
+
+        return date("d $month Y", $this->time);
+    }
+
+    public function getCountParents()
+    {
+        $count = 0;
+        if ($this->count_4 != 0)
+            $count += $this->count_4;
+
+        if ($this->count_5 != 0)
+         $count += $this->count_5 * 2;
+
+        if ($this->count_6 != 0)
+            $count += $this->count_6;
+
+        if ($this->count_8 != 0)
+            $count += $this->count_8;
+
+        return $count;
+    }
+
+    public function getCountKids()
+    {
+        $count = 0;
+
+        if ($this->count_1 != 0)
+            $count += $this->count_1;
+
+        if ($this->count_2 != 0)
+            $count += $this->count_2;
+
+        if ($this->count_5 != 0)
+            $count += $this->count_5 * 2;
+
+        if ($this->count_6 != 0)
+            $count += $this->count_6;
+
+        if ($this->count_7 != 0)
+            $count += $this->count_7;
+
+        if ($this->count_9 != 0)
+            $count += $this->count_9;
+
+        return $count;
     }
 }

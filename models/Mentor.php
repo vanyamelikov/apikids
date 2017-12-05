@@ -37,6 +37,11 @@ class Mentor extends \yii\db\ActiveRecord
         return 'mentor';
     }
 
+    public function extraFields()
+    {
+        return ['age', 'reviewCount'];
+    }
+
     /**
      * @inheritdoc
      */
@@ -82,5 +87,15 @@ class Mentor extends \yii\db\ActiveRecord
     public function getReviewMentor()
     {
         return $this->hasMany(ReviewMentor::className(), ['id_mentor' => 'id']);
+    }
+
+    public function getReviewCount()
+    {
+        return $this->hasMany(ReviewMentor::className(), ['id_mentor' => 'id'])->count();
+    }
+
+    public function getAge()
+    {
+        return floor((time()-$this->birthday)/(60*60*24*365));
     }
 }

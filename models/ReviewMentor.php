@@ -25,13 +25,18 @@ class ReviewMentor extends \yii\db\ActiveRecord
         return 'review_mentor';
     }
 
+    public function extraFields()
+    {
+        return ['dateText', 'userName'];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id_mentor', 'id_user', 'like', 'text', 'date', 'status'], 'required'],
+            [['id_mentor', 'id_user', 'text', 'date'], 'required'],
             [['id_mentor', 'id_user', 'like', 'date', 'status'], 'integer'],
             [['text'], 'string'],
         ];
@@ -51,5 +56,50 @@ class ReviewMentor extends \yii\db\ActiveRecord
             'date' => 'Date',
             'status' => 'Status',
         ];
+    }
+
+
+    public function getDateText()
+    {
+        $arr = [
+            'Января',
+            'Февраля',
+            'Марта',
+            'Апреля',
+            'Мая',
+            'Июня',
+            'Июля',
+            'Августа',
+            'Сентября',
+            'Октября',
+            'Ноября',
+            'Декабря'
+        ];
+
+        $month = $arr[date("m", $this->date) - 1];
+
+        return date("d $month Y", $this->date);
+    }
+
+    public function getUserName()
+    {
+        $user = $this->user;
+
+        if (!$user)
+            return "";
+
+        $profile = $user->profile;
+        if (!$profile)
+            return "";
+
+        $name = $profile->name;
+        $surname = $profile->surname;
+
+        return $name." ".$surname;
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(Users::className(), ['id' => 'id_user']);
     }
 }

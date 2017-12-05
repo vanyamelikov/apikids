@@ -4,6 +4,7 @@ namespace app\controllers;
 
 
 use app\models\ReviewMentor;
+use Yii;
 use yii\data\ActiveDataProvider;
 
 class MentorController extends CController
@@ -19,5 +20,19 @@ class MentorController extends CController
         $dataProvider->pagination->pageSize = 10;
 
         return $dataProvider;
+    }
+
+    public function actionAddReview($id, $text)
+    {
+        $review = new ReviewMentor([
+            'date' => time(),
+            'id_mentor' => $id,
+            'id_user' => Yii::$app->user->id,
+            'text' => $text
+        ]);
+
+        $review->save();
+
+        return $review;
     }
 }
